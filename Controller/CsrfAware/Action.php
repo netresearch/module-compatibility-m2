@@ -6,6 +6,8 @@
 namespace Netresearch\Compatibility\Controller\CsrfAware;
 
 use Magento\Framework\App\Action\Action as CoreAction;
+use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultInterface;
 
@@ -16,7 +18,7 @@ use Magento\Framework\Controller\ResultInterface;
  * @author Paul Siedler <paul.siedler@netresearch.de>
  * @link http://www.netresearch.de/
  */
-abstract class Action extends CoreAction
+abstract class Action extends CoreAction implements CsrfAwareActionInterface
 {
     /**
      * {@inheritdoc}
@@ -41,4 +43,22 @@ abstract class Action extends CoreAction
      * @return bool
      */
     abstract protected function proxyValidateForCsrf(RequestInterface $request);
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createCsrfValidationException(RequestInterface $request): InvalidRequestException
+    {
+        $response = $this->getCsrfExceptionResponse($request);
+
+        return new InvalidRequestException($response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validateForCsrf(RequestInterface $request): bool
+    {
+        return $this->proxyValidateForCsrf($request);
+    }
 }
