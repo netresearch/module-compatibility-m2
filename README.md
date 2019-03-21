@@ -43,4 +43,19 @@ which will only allow a specific version of this extension on the merchants inst
 Supported Forward/Backward compatibilities
 -------------------------------------------
 
-- CsrfAwareActionInterface (`Magento\Framework\App\CsrfAwareActionInterface`)
+### CsrfAwareActionInterface (`Magento\Framework\App\CsrfAwareActionInterface`)
+
+*Compatibility breaking version:* Magento 2.3.0
+
+To have a backward compatible controller for Magento 2.3 that can accept external POST requests, just extend {{Netresearch\Compatibility\Controller\CsrfAware\Action}} and implement the abstract methods. For Magento 2.2 and 2.1 that will likely result in dead code (unless you refer to those functions in the rest of you Controller), but you don't have to worry about managing the Interface implementation yourself.
+
+
+
+License
+-------
+Open Software License v. 3.0 (OSL-3.0)
+
+Copyright
+---------
+Netresearch DTT GmbH (www.netresearch.de)
+
